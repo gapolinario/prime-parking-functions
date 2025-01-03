@@ -19,6 +19,46 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import numpy as np
 import re
 from scipy.special import factorial, comb
+from collections.abc import Hashable
+from functools import partial
+
+
+class memoized(object):
+    """Decorator. Caches a function's return value each time it is called.
+    If called later with the same arguments, the cached value is returned
+    (not reevaluated).
+
+    source: https://wiki.python.org/moin/PythonDecoratorLibrary#Memoize
+    """
+
+    def __init__(self, func):
+        self.func = func
+        self.cache = {}
+
+    def __call__(self, *args):
+        if not isinstance(args, Hashable):
+            # uncacheable. a list, for instance.
+            # better to not cache than blow up.
+            return self.func(*args)
+        if args in self.cache:
+            return self.cache[args]
+        else:
+            value = self.func(*args)
+            self.cache[args] = value
+            return value
+
+    def __repr__(self):
+        """Return the function's docstring."""
+        return self.func.__doc__
+
+    def __get__(self, obj, objtype):
+        """Support instance methods."""
+        return partial(self.__call__, obj)
+
+
+@memoized
+def exact_factorial(n):
+    return factorial(n, exact=True)
 
 
 class Tree(object):
@@ -72,7 +112,7 @@ class Tree(object):
 
 
 def catalan_num(n):
-    return comb(2*n,n,exact=True) // (n+1)
+    return comb(2 * n, n, exact=True) // (n + 1)
 
 
 def get_last_name(name):
@@ -162,7 +202,7 @@ def tree_enum(n, prev_tree=None):
         tree = Tree("1")
         enum = 1
         return enum, tree
-    
+
     else:
         assert prev_tree.get_height() == n - 1
 
@@ -179,18 +219,14 @@ def tree_enum(n, prev_tree=None):
 
 def num_unique_perms_from_str(name):
 
-    arr = np.array([int(x) for x in re.split(",", name)])
-    unq = set(arr)
+    arr = np.array([int(x) for x in name.split(",")])
+    unique, counts = np.unique(arr, return_counts=True)
+    
+    total_perms = exact_factorial(len(arr))
+    for x in counts:
+        total_perms //= exact_factorial(x)
 
-    count = [None] * len(unq)
-    for i, u in enumerate(unq):
-        count[i] = len(np.argwhere(arr == u))
-
-    num = factorial(len(arr), exact=True)
-    for x in count:
-        num = num // factorial(x, exact=True)
-
-    return num
+    return total_perms
 
 
 def test_primePF(f):
@@ -205,4 +241,3 @@ def test_primePF(f):
             return False
 
     return True
-

@@ -78,7 +78,7 @@ def main():
         fit_xpowx(xBF, *optBF),
         ls="dashed",
         color="k",
-        label=rf"fit: "+print_pow10(optBF[0])+rf" $\times \, n^{{{optBF[1]:5.3f}}}$",
+        label=rf"fit: "+print_pow10(optBF[0])+rf" $\times \, n^{{{optBF[1]:5.3f} n}}$",
         lw=2,
     )
     ax.plot(xTR, timeTR, label="Tree", lw=3)
@@ -87,7 +87,7 @@ def main():
         fit_xpowx(xTR, *optTR),
         ls="dashed",
         color="k",
-        label=rf"fit: "+print_pow10(optTR[0])+rf" $\times \, n^{{{optTR[1]:5.3f}}}$",
+        label=rf"fit: "+print_pow10(optTR[0])+rf" $\times \, n^{{{optTR[1]:5.3f} n}}$",
         lw=2,
     )
     ax.grid(visible=True, which='both', color='gray', linestyle='--', linewidth=0.5, alpha=0.7)
