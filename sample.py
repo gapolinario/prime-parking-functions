@@ -16,7 +16,6 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
-
 import numpy as np
 import re
 
@@ -35,6 +34,9 @@ def main(nmax, num_samples):
     for i,l in enumerate(leaves):
         weights[i] = num_unique_perms_from_str(l.name)
 
+    num_leaves = catalan_num(nmax-1)
+    assert len(leaves) == num_leaves
+
     #for w,l in zip(weights,leaves):
     #    print(f"{l}: {w}")
 
@@ -44,7 +46,7 @@ def main(nmax, num_samples):
 
     for _ in range(num_samples):
 
-        k = rng.choice(len(leaves), p=weights)
+        k = rng.choice(num_leaves, p=weights)
         array = re.split(',',leaves[k].name)
         sample = rng.permutation(array)
 

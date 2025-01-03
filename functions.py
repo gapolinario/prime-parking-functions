@@ -18,7 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import numpy as np
 import re
-from scipy.special import factorial
+from scipy.special import factorial, comb
 
 
 class Tree(object):
@@ -69,6 +69,10 @@ class Tree(object):
         height = 1 + (self.children[0]).get_height()
 
         return height
+
+
+def catalan_num(n):
+    return comb(2*n,n,exact=True) // (n+1)
 
 
 def get_last_name(name):

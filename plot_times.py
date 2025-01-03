@@ -101,7 +101,8 @@ def main():
 
 
     plt.tight_layout()
-    plt.show()
+    plt.savefig("parking-runtimes.png", dpi=300)
+    #plt.show()
     plt.close()
 
 if __name__ == "__main__":
