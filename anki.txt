@@ -1,0 +1,14 @@
+#tags: math computing parking-functions
+#notetype: Basic
+#separator: Semicolon
+
+What is the definition of a parking function?; \(n\) cars declare their preference to park in \(n\) spots. If the spot is taken, they take the next available spot. All cars must park by the end of the process.
+What was the motivation of Konheim and Weiss for the introduction of parking functions?; Efficient information storage and retrieval in large databases.
+Which functions from \(p : \{ 1, \cdots, n\} \to \{ 1, \cdots, n\}\) are valid parking functions?; Sort the sequence \((p_i)\) into \((q_i)\). This is a valid parking function if \(q_i \leq i\) for all \(i \in \{ 1, \cdots, n\}\)
+What is the definition of the prime parking functions \(p : \{ 1, \cdots, n\} \to \{ 1, \cdots, n\}\)?; Sort the sequence \((p_i)\) into \((q_i)\). This is a prime parking function if \(q_i \leq i\) for all \(i \in \{ 2, \cdots, n\}\)
+What is the number of parking functions of length \(n\)?; \(|\mathrm{PF}(n) | = (n+1)^{n-1}\)
+What is the number of prime parking functions of length \(n\)?; \(|\mathrm{PF}'(n) | = (n-1)^{n-1}\)
+What data structure can be used to efficiently enumerate the parking functions?; \(n\)-ary trees
+What is memoization?; Memoization is a technique in programming that involves storing the results of expensive function calls and reusing the cached result when the same inputs occur again.
+Provide an example use case where memoization is useful; The Fibonacci sequence
+What is the asymptotic computational complexity of brute force enumeration of parking functions of length \(n\)?; \(\Theta(n^n)\)
